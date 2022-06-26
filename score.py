@@ -73,9 +73,10 @@ class NEU:
             new = get_xpath(response, xpath_str.format(4))[-1].replace('\n', '').replace('\t', '')
             print(len(x), "有新成绩:" + new)
             self.push(new)
+            write_js(len(x))
         else:
             print(len(x), "成绩未增加")
-        write_js(len(x))
+        
 
     def push(self, name):
         push_url = 'https://api2.pushdeer.com/message/push?pushkey=' + self.pushkey + '&text=' + name + '成绩公布'
