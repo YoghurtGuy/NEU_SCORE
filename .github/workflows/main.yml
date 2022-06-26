@@ -55,8 +55,11 @@ jobs:
         git config --local user.email "leftongyu@gmail.com"
         git config --local user.name "CHECK"
         git add .
+        if
         git ls-files -m| grep "^-d" | wc -l 
+        then
         git commit -m "`date '+%Y-%m-%d %H:%M:%S'`" #动态提交信息
+        if
         
         
         
