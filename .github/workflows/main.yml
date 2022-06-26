@@ -61,8 +61,6 @@ jobs:
         git commit -m "`date '+%Y-%m-%d %H:%M:%S'`" #动态提交信息
         if
         
-        
-        
       # 推送到github仓库
     - name: Push changes
       uses: ad-m/github-push-action@master
