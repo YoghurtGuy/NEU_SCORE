@@ -9,7 +9,7 @@
 
    我使用的是pushkey进行推送（对ios来说比较好用，安卓建议使用其他方式），你可以选择使用自己的推送方式，需要自行修改score.py文件里的NEU类里的push函数。
 
-   Pushdeer官网：http://www.pushdeer.com/在里面下载ios，或Android APP，在安装和登录后会得到一个key，下一步中我们会用到。
+   Pushdeer官网：http://www.pushdeer.com/ 在里面下载ios，或Android APP，在安装和登录后会得到一个key，下一步中我们会用到。
 
 3. ### 使用
 
