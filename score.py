@@ -76,7 +76,6 @@ class NEU:
         else:
             print(len(x), "成绩未增加")
         write_js(len(x))
-        
 
     def push(self, name):
         push_url = 'https://api2.pushdeer.com/message/push?pushkey=' + self.pushkey + '&text=' + name + '成绩公布'
