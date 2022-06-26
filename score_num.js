@@ -1,0 +1,1 @@
+async function getData(){const num = "38";return num;}getData().then((num) => {console.log(num);return num;});
