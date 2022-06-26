@@ -1,0 +1,66 @@
+name: CI
+
+on: 
+  # 手动打卡
+  workflow_dispatch:
+  schedule:
+    # UTC时间,北京时间为5:00-23:50,间隔10分钟
+    - cron:  '*/10 21-23,0-17 * * *'
+  push:
+    # 运行分支
+    branches: 
+      - main
+    paths:
+      - "/"
+
+jobs:
+  check_score:
+    runs-on: ubuntu-latest
+    
+
+    steps:
+    - uses: actions/checkout@v3  
+    - name: Setup Node.js
+      uses: actions/setup-node@v2  #安装node.js
+      with:
+        node-version: '14'
+          
+    - name: get NUM     
+      run: |
+        NUM=$(node ./score_num.js)
+        echo "NUM=$NUM" >> $GITHUB_ENV
+        
+#     - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      
+    - name: Run python
+      run: |
+        python score.py  
+      env:
+        SID: ${{ secrets.SID }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        PUSHKEY: ${{ secrets.PUSHKEY }}
+        NUM: ${{ env.NUM }}
+        
+      # git 提交文件
+    - name: Commit files
+      run: |
+        git config --local user.email "leftongyu@gmail.com"
+        git config --local user.name "CHECK"
+        git add .
+        git commit -m "`date '+%Y-%m-%d %H:%M:%S'`" #动态提交信息
+        
+      # 推送到github仓库
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+
