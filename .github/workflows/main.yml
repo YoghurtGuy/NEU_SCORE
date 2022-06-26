@@ -55,7 +55,7 @@ jobs:
         git config --local user.email "leftongyu@gmail.com"
         git config --local user.name "CHECK"
         git add .
-        [git ls-files -m| grep "^-d" | wc -l] && git commit -m "`date '+%Y-%m-%d %H:%M:%S'`" #动态提交信息
+        git commit -m "`date '+%Y-%m-%d %H:%M:%S'`" #动态提交信息
         
       # 推送到github仓库
     - name: Push changes
