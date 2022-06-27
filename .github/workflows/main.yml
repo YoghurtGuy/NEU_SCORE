@@ -27,7 +27,7 @@ jobs:
           
     - name: get COURSE     
       run: |
-        NUM=$(node ./score_num.js)
+        COURSE=$(node ./score_num.js)
         echo "COURSE=$COURSE" >> $GITHUB_ENV
         
 #     - uses: actions/checkout@v3
