@@ -25,10 +25,10 @@ jobs:
       with:
         node-version: '14'
           
-    - name: get NUM     
+    - name: get COURSE     
       run: |
         NUM=$(node ./score_num.js)
-        echo "NUM=$NUM" >> $GITHUB_ENV
+        echo "COURSE=$COURSE" >> $GITHUB_ENV
         
 #     - uses: actions/checkout@v3
     - name: Set up Python
@@ -47,13 +47,13 @@ jobs:
         SID: ${{ secrets.SID }}
         PASSWORD: ${{ secrets.PASSWORD }}
         PUSHKEY: ${{ secrets.PUSHKEY }}
-        NUM: ${{ env.NUM }}
+        COURSE: ${{ env.COURSE }}
         
       # git 提交文件
     - name: Commit files
       run: |
         git config --local user.email "leftongyu@gmail.com"
-        git config --local user.name "CHECK"
+        git config --local user.name "UPDATE"
         git add .
         git commit -m "`date '+%Y-%m-%d %H:%M:%S'`" #动态提交信息
         
