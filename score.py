@@ -14,8 +14,10 @@ def get_xpath(r, xpath_str):
 
 
 def write_js(num, course):
-    x = 'async function getData(){const num = "' + str(num) + '_' + '_'.join(course) + '";return num;}' \
-                                                                                       'getData().then((num) => {console.log(num);return num;});'
+    x = 'async function getData(){const course = "' + str(num) + '_' + '_'.join(course) + '";return course;}' \
+                                                                                       'getData().then((course) => {' \
+                                                                                          'console.log(course);return ' \
+                                                                                          'course;}); '
     with open('score_num.js', "w") as file:
         file.write(x)
 
