@@ -13,9 +13,9 @@ def get_xpath(r, xpath_str):
     return res_list
 
 
-def write_js(num):
-    x = 'async function getData(){const num = "' + str(num) + '";return num;}' \
-                                                              'getData().then((num) => {console.log(num);return num;});'
+def write_js(num, course):
+    x = 'async function getData(){const num = "' + str(num) + '_' + '_'.join(course) + '";return num;}' \
+                                                                                       'getData().then((num) => {console.log(num);return num;});'
     with open('score_num.js', "w") as file:
         file.write(x)
 
@@ -68,14 +68,23 @@ class NEU:
             print(str(response) + '获取成绩失败！' + '(响应异常)')
             sys.exit()
         xpath_str = '//*[@id="grid21344342991_data"]/tr[*]/td[{}]/text()'
-        x = get_xpath(response, xpath_str.format(3))
-        if len(x) != int(os.environ.get('NUM')):
-            new = get_xpath(response, xpath_str.format(4))[-1].replace('\n', '').replace('\t', '')
-            print(len(x), "有新成绩:" + new)
-            self.push(new)
+        x = get_xpath(response, xpath_str.format(1))
+        current_course_num = 1
+        for i in range(len(x) - 2, -1, -1):
+            if x[i] == x[-1]:
+                current_course_num += 1
+        history_course = os.environ.get('COURSE').split('_')
+        history_num = int(history_course[0])
+        if len(x) != history_num:
+            current_course = list(map(lambda y: y.replace('\n', '').replace('\t', ''),
+                                      get_xpath(response, xpath_str.format(4))[-current_course_num:]))
+            for c in current_course:
+                if c not in history_course:
+                    print(len(x), "有新成绩:" + c)
+                    self.push(c)
+            write_js(len(x), current_course)
         else:
             print(len(x), "成绩未增加")
-        write_js(len(x))
 
     def push(self, name):
         push_url = 'https://api2.pushdeer.com/message/push?pushkey=' + self.pushkey + '&text=' + name + '成绩公布'
