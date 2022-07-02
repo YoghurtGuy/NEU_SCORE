@@ -1,1 +1,1 @@
-async function getData(){const course = "42_通讯与网络（双语）_人工智能概论_智能医学3D打印技术（双语）_形势与政策(2)_心理学概论（在线式）";return course;}getData().then((course) => {console.log(course);return course;}); 
+async function getData(){const course = "43_通讯与网络（双语）_形势与政策(2)_智能医学3D打印技术（双语）_人工智能概论_大学物理实验㈡_心理学概论（在线式）";return course;}getData().then((course) => {console.log(course);return course;}); 
