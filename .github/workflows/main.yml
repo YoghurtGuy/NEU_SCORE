@@ -54,8 +54,7 @@ jobs:
       run: |
         git config --local user.email "leftongyu@gmail.com"
         git config --local user.name "UPDATE"
-        git add .
-        git commit -m "`date '+%Y-%m-%d %H:%M:%S'`" #动态提交信息
+        git diff --exit-code || git add . && git commit -m "`date '+%Y-%m-%d %H:%M:%S'`" #动态提交信息
         
       # 推送到github仓库
     - name: Push changes
