@@ -58,13 +58,16 @@ class NEU:
         post1_url = 'https://pass.neu.edu.cn/tpass/login'
         post2_url = 'https://webvpn.neu.edu.cn/https/77726476706e69737468656265737421e0f6528f693e6d45300d8db9d6562d' \
                     '/tpass/login'
+        login3_url = 'http://219.216.96.4/eams/homeExt.action'
+        self.login_base(login3_url, post1_url)
 
-        self.login_base(login1_url, post1_url)
-        self.login_base(login2_url, post2_url)
+        # self.login_base(login1_url, post1_url)
+        # self.login_base(login2_url, post2_url)
 
     def check_score(self):
-        score_url = 'https://webvpn.neu.edu.cn/http/77726476706e69737468656265737421a2a618d275613e1e275ec7f8/eams' \
-                    '/teach/grade/course/person!historyCourseGrade.action?projectType=MAJOR'
+        # score_url = 'https://webvpn.neu.edu.cn/http/77726476706e69737468656265737421a2a618d275613e1e275ec7f8/eams' \
+        #             '/teach/grade/course/person!historyCourseGrade.action?projectType=MAJOR'
+        score_url ='http://219.216.96.4/eams/teach/grade/course/person!historyCourseGrade.action?projectType=MAJOR'
         response = self.session.get(score_url)
         if response.status_code != 200:
             print(str(response) + '获取成绩失败！' + '(响应异常)')
