@@ -98,11 +98,12 @@ class NEU:
             current_course = list(map(lambda y: y.replace('\n', '').replace('\t', ''),
                                       get_xpath(response, xpath_str.format(4))[-current_course_num:]))
             for idx, c in enumerate(current_course):
-                print(len(x), "有新的成绩公布:" + c)
-                if send_score_detail:
-                    self.push(c, get_score(response, len(x) - current_course_num + idx + 1))
-                else:
-                    self.push(c, ' ')
+                if c not in history_course:
+                    print(len(x), "有新的成绩公布:" + c)
+                    if send_score_detail:
+                        self.push(c, get_score(response, len(x) - current_course_num + idx + 1))
+                    else:
+                        self.push(c, ' ')
             write_js(len(x), current_course)
         else:
             print(len(x), "成绩未增加")
