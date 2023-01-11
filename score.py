@@ -109,9 +109,10 @@ class NEU:
             print(len(x), "成绩未增加")
 
     def push(self, name, markdown):
-        push_url = 'https://api2.pushdeer.com/message/push?pushkey=' + self.pushkey \
-                   + '&text=《' + name + '》成绩公布了！&desp=' + markdown + '&type=markdown'
-        self.session.get(push_url)
+        push_url = ['https://api2.pushdeer.com/message/push?pushkey={}&text=《{}》成绩公布了！&desp={}&type=markdown',
+                    'https://sctapi.ftqq.com/{}.send?title={}&desp={}']
+        Push_Channel = 1 if self.pushkey[0] == 'S' else 0
+        self.session.get(push_url[Push_Channel].format(self.pushkey, name, markdown))
 
 
 if __name__ == '__main__':
