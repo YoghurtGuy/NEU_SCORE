@@ -6,11 +6,13 @@ from lxml import etree
 
 import requests
 
+send_score_detail = True
+
 
 def get_xpath(r, xpath_str):
     html = etree.HTML(r.text)
     res_list = html.xpath(xpath_str)
-    return res_list
+    return list(map(lambda y: y.replace('\n', '').replace('\t', '').replace(' ', ''), res_list))
 
 
 def write_js(num, course):
@@ -20,6 +22,18 @@ def write_js(num, course):
                                                                                           'course;}); '
     with open('score_num.js', "w") as file:
         file.write(x)
+
+
+def get_score(response, c_id):
+    xpath_str = '//*[@id="grid21344342991_data"]/tr[{}]/td[{}]/text()'
+    column_name = ['课程名称', '课程类别', '是否选修', '学分', '平时成绩', '期中成绩', '期末成绩', '总评成绩', '最终',
+                   '绩点', '考试情况']
+    score = ''
+    for s_id in range(4, 15):
+        if s_id == 6: continue  # 跳过《是否选修》
+        course_detail = get_xpath(response, xpath_str.format(c_id, s_id))
+        score += column_name[s_id - 4] + ':**' + (course_detail[0] if len(course_detail) else '空') + '**  \n'
+    return score
 
 
 class NEU:
@@ -51,13 +65,13 @@ class NEU:
             sys.exit()
 
     def login(self):
-        login1_url = 'https://webvpn.neu.edu.cn/'
-        login2_url = 'https://webvpn.neu.edu.cn/https/77726476706e69737468656265737421e0f6528f693e6d45300d8db9d6562d' \
-                     '/tpass/login?service=http%3A%2F%2F219.216.96.4%2Feams%2FhomeExt.action%3Bjsessionid' \
-                     '%3D1CD246CF33E2553CCA315F972A65FB21.std10 '
+        # login1_url = 'https://webvpn.neu.edu.cn/'
+        # login2_url = 'https://webvpn.neu.edu.cn/https/77726476706e69737468656265737421e0f6528f693e6d45300d8db9d6562d' \
+        #              '/tpass/login?service=http%3A%2F%2F219.216.96.4%2Feams%2FhomeExt.action%3Bjsessionid' \
+        #              '%3D1CD246CF33E2553CCA315F972A65FB21.std10 '
         post1_url = 'https://pass.neu.edu.cn/tpass/login'
-        post2_url = 'https://webvpn.neu.edu.cn/https/77726476706e69737468656265737421e0f6528f693e6d45300d8db9d6562d' \
-                    '/tpass/login'
+        # post2_url = 'https://webvpn.neu.edu.cn/https/77726476706e69737468656265737421e0f6528f693e6d45300d8db9d6562d' \
+        #             '/tpass/login'
         login3_url = 'http://219.216.96.4/eams/homeExt.action'
         self.login_base(login3_url, post1_url)
 
@@ -83,16 +97,19 @@ class NEU:
         if len(x) != history_num:
             current_course = list(map(lambda y: y.replace('\n', '').replace('\t', ''),
                                       get_xpath(response, xpath_str.format(4))[-current_course_num:]))
-            for c in current_course:
-                if c not in history_course:
-                    print(len(x), "有新成绩:" + c)
-                    self.push(c)
+            for idx, c in enumerate(current_course):
+                print(len(x), "有新的成绩公布:" + c)
+                if send_score_detail:
+                    self.push(c, get_score(response, len(x) - current_course_num + idx + 1))
+                else:
+                    self.push(c, ' ')
             write_js(len(x), current_course)
         else:
             print(len(x), "成绩未增加")
 
-    def push(self, name):
-        push_url = 'https://api2.pushdeer.com/message/push?pushkey=' + self.pushkey + '&text=' + name + '成绩公布'
+    def push(self, name, markdown):
+        push_url = 'https://api2.pushdeer.com/message/push?pushkey=' + self.pushkey \
+                   + '&text=《' + name + '》成绩公布了！&desp=' + markdown + '&type=markdown'
         self.session.get(push_url)
 
 
