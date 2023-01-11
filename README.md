@@ -1,4 +1,5 @@
-# ValueNEU_SCORE
+# NEU_SCORE东北大学成绩公布推送
+
 检测东北大学NEU教务处成绩是否有更新（是否有新出成绩），有更新则通知
 
 1. ### 简介
@@ -25,9 +26,14 @@
 
       最后到仓库的Actions页，看到有一个灰色的叫“CI”的workflow，点开后点击右侧 enable workflow
 
+   4. 如果想要推送时不推送具体成绩，可自行修改score.py文件里第九行send_score_detail = False
+
+4. ### 参考
+
+   NEU统一身份登录部分代码参考了[NEU_health_daka](https://github.com/Bmaili/NEU_health_daka)，感谢！
+
+
+
+
+
 ### 如果有任何问题可以Issues给我，如果搞不定其他推送方式，我也可以帮忙code，或者联系我的邮箱leftongyu@gmail.com，转载请注明
-
-
-
-
-
