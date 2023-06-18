@@ -1,1 +1,1 @@
-async function getData(){const course = "58_医学成像技术与医学图像处理_深度学习_形势与政策(3)";return course;}getData().then((course) => {console.log(course);return course;}); 
+async function getData(){const course = "59_新闻摄影（在线式）_医学成像技术与医学图像处理_深度学习_形势与政策(3)";return course;}getData().then((course) => {console.log(course);return course;}); 
