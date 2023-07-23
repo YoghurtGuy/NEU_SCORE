@@ -1,1 +1,1 @@
-async function getData(){const course = "63_新闻摄影（在线式）_自然语言处理（双语）_影像诊断学与智能影像组学_智能医学工程实践_医学成像技术与医学图像处理_智能医学算法设计_深度学习_形势与政策(3)";return course;}getData().then((course) => {console.log(course);return course;}); 
+async function getData(){const course = "64_新闻摄影（在线式）_自然语言处理（双语）_影像诊断学与智能影像组学_智能医学工程实践_脑科学与类脑机器学习_智能医学算法设计_深度学习_形势与政策(3)_医学成像技术与医学图像处理";return course;}getData().then((course) => {console.log(course);return course;}); 
