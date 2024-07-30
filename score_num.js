@@ -1,1 +1,1 @@
-async function getData(){const course = "68_毕业设计/论文";return course;}getData().then((course) => {console.log(course);return course;}); 
+async function getData(){const course = "0_";return course;}getData().then((course) => {console.log(course);return course;}); 
